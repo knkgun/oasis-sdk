@@ -273,3 +273,31 @@ func (a *v1) DecodeEvent(event *types.Event) ([]client.DecodedEvent, error) {
 func NewV1(rc client.RuntimeClient) V1 {
 	return &v1{rc: rc}
 }
+
+// NewUploadTx generates a new contracts.Upload transaction.
+//
+// It assumes that the passed body.Code is not compressed and will perform compression
+// automatically.
+func NewUploadTx(fee *types.Fee, body *Upload) *types.Transaction {
+	// Compress code before upload.
+	var compressedCode bytes.Buffer
+	encoder := snappy.NewBufferedWriter(&compressedCode)
+	_, err := encoder.Write(body.Code)
+	if err != nil {
+		panic(err)
+	}
+	encoder.Close()
+	body.Code = compressedCode.Bytes()
+
+	return types.NewTransaction(fee, methodUpload, body)
+}
+
+// NewInstantiateTx generates a new contracts.Instantiate transaction.
+func NewInstantiateTx(fee *types.Fee, body *Instantiate) *types.Transaction {
+	return types.NewTransaction(fee, methodInstantiate, body)
+}
+
+// NewCallTx generates a new contracts.Call transaction.
+func NewCallTx(fee *types.Fee, body *Call) *types.Transaction {
+	return types.NewTransaction(fee, methodCall, body)
+}
