@@ -433,3 +433,86 @@ export interface ResultEnvelopeX25519DeoxysII {
     nonce: Uint8Array;
     data: Uint8Array;
 }
+
+export interface ContractsPolicy {
+    nobody?: {};
+    address?: Uint8Array;
+    everyone?: {};
+}
+
+/**
+ * Upload call.
+ */
+export interface ContractsUpload {
+    /**
+     * ABI.
+     */
+    abi: number;
+    /**
+     * Who is allowed to instantiate this code.
+     */
+    instantiate_policy: ContractsPolicy;
+    /**
+     * Compiled contract code.
+     */
+    code: Uint8Array;
+}
+
+/**
+ * Upload call result.
+ */
+export interface ContractsUploadResult {
+    /**
+     * Assigned code identifier.
+     */
+    id: oasis.types.longnum;
+}
+
+/**
+ * Instantiate call.
+ */
+export interface ContractsInstantiate {
+    /**
+     * Identifier of code used by the instance.
+     */
+    code_id: oasis.types.longnum;
+
+    /**
+     * Who is allowed to upgrade this instance.
+     */
+    upgrades_policy: ContractsPolicy;
+
+    /**
+     * Arguments to contract's instantiation function.
+     */
+    data: Uint8Array;
+
+    /**
+     * Tokens that should be sent to the contract as part of the instantiate call.
+     */
+    tokens: BaseUnits[];
+}
+
+/**
+ * Instantiate call result.
+ */
+export interface ContractsInstantiateResult {
+    /**
+     * Assigned instance identifier.
+     */
+    id: oasis.types.longnum;
+}
+
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
+export interface Contracts {}
